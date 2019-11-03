@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mood_view_item_table_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:orientation="vertical">
+
+        <LinearLayout android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+        <LinearLayout android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+        <TextView
+            android:id="@+id/mood_view_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:padding="@dimen/item_padding"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:text="rakesh psndey"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/textColor"
+            />
+                <TextView
+                    android:id="@+id/mood_view_item_time"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:padding="@dimen/item_padding"
+                    android:layout_marginLeft="10dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="rakesh psndey"
+                    android:textColor="@color/textColor"
+                    android:layout_height="0dp" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/mood_view_item_text"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:textColor="#fafafa"
+            android:layout_gravity="end" />
+
+</LinearLayout>
+
+        <TextView
+            android:id="@+id/mood_comment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/comment_height"
+            android:gravity="center"
+            android:padding="@dimen/item_padding"
+            android:text="Rakesh"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="italic"></TextView>
+
+</LinearLayout>
+
+
+

@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="freewill.rakesh.com.howdoyoufeel.activity.MoodLogger">
+    <item
+        android:id="@+id/action_savedValue"
+        android:orderInCategory="100"
+        android:title="@string/action_saved_values"
+        app:showAsAction="never" />
+</menu>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mood_view_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:orientation="horizontal">
+
+
+
+    <TextView
+        android:id="@+id/mood_view_item_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:textAlignment="viewEnd"
+        android:padding="@dimen/item_padding"
+        android:textColor="@color/textColor"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="end" />
+</LinearLayout>

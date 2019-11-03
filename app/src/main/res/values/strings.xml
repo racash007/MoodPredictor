@@ -1,0 +1,11 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">HowDoYouFeel</string>
+    <string name="action_saved_values">Show Saved value</string>
+    <string name="channel_name">MoodNotificationChannel</string>
+    <string name="channel_description">A Channel to notify user to register their mood</string>
+    <string name="channel_Id">MoodLoggerChannelId</string>
+    <string name="log">Log</string>
+    <string name="today">Today</string>
+    <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
+    <string name="sun_rise_api_url">https://api.sunrise-sunset.org/json</string>
+</resources>

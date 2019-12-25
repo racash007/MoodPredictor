@@ -61,7 +61,7 @@ public class MoodTableViewAdapter extends RecyclerView.Adapter<MoodTableViewAdap
             @Override
             public void onClick(View view) {
                 if(mood.getMoodDesc()!=null)
-                {mood.setIsExpanded(!mood.getIsExpanded());}
+                {mood.setExpanded(!mood.isExpanded());}
                 notifyItemChanged(position);
             }
         });
@@ -95,7 +95,7 @@ public class MoodTableViewAdapter extends RecyclerView.Adapter<MoodTableViewAdap
 
         public void bind(Mood mood) {
             moodCommentTextView  = itemView.findViewById(R.id.mood_comment);
-            moodCommentTextView.setVisibility(mood.getIsExpanded()?View.VISIBLE:View.GONE);
+            moodCommentTextView.setVisibility(mood.isExpanded()?View.VISIBLE:View.GONE);
         }
     }
 }

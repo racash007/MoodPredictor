@@ -12,6 +12,14 @@ import java.util.Date;
 public class Mood  {
 
 
+    @Override
+    public String toString() {
+        return "Mood{" +
+                "mood='" + mood + '\'' +
+                ", moodTime=" + moodTime +
+                ", moodDesc='" + moodDesc + '\'' +
+                '}';
+    }
 
 
     @Id
@@ -24,6 +32,7 @@ public class Mood  {
     @Property(nameInDb = "mood_time")
     private Date moodTime;
 
+
     @Property(nameInDb = "mood_desc")
     private String moodDesc;
 
@@ -31,13 +40,7 @@ public class Mood  {
     @Transient
     private boolean isExpanded;
 
-    @Generated(hash = 1880245020)
-    public Mood(Long moodId, @NotNull String mood, Date moodTime, String moodDesc) {
-        this.moodId = moodId;
-        this.mood = mood;
-        this.moodTime = moodTime;
-        this.moodDesc = moodDesc;
-    }
+
 
     public Mood() {
     }
@@ -48,11 +51,11 @@ public class Mood  {
         this.moodTime = new Date();
     }
 
-    public String getMoodDesc() {
-        return moodDesc;
-    }
-
-    public void setMoodDesc(String moodDesc) {
+    @Generated(hash = 1880245020)
+    public Mood(Long moodId, @NotNull String mood, Date moodTime, String moodDesc) {
+        this.moodId = moodId;
+        this.mood = mood;
+        this.moodTime = moodTime;
         this.moodDesc = moodDesc;
     }
 
@@ -72,20 +75,27 @@ public class Mood  {
         this.moodTime = moodTime;
     }
 
-    public boolean getIsExpanded() {
-        return this.isExpanded;
-    }
-
-    public void setIsExpanded(boolean isExpanded) {
-        this.isExpanded = isExpanded;
-    }
-
     public Long getMoodId() {
-        return this.moodId;
+        return moodId;
     }
 
     public void setMoodId(Long moodId) {
         this.moodId = moodId;
     }
 
+    public String getMoodDesc() {
+        return moodDesc;
+    }
+
+    public void setMoodDesc(String moodDesc) {
+        this.moodDesc = moodDesc;
+    }
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
+    }
 }

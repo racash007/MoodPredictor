@@ -7,6 +7,7 @@ import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.annotation.Transient;
 
 @Entity(generateGettersSetters = true)
 public class MoodDriver {
@@ -36,6 +37,7 @@ public class MoodDriver {
 
     private Long moodId;
 
+
     @ToOne(joinProperty= "moodId")
     private Mood mood;
     /** Used to resolve relations */
@@ -44,7 +46,8 @@ public class MoodDriver {
     /** Used for active entity operations. */
     @Generated(hash = 1093896270)
     private transient MoodDriverDao myDao;
-
+    @Generated(hash = 1683375380)
+    private transient Long mood__resolvedKey;
     @Generated(hash = 886848837)
     public MoodDriver(Long moodDriverId, int ascendantSign, int sunPosition,
             int moonPosition, int rahuPosition, int ketuPosition, int marPosition,
@@ -168,9 +171,6 @@ public class MoodDriver {
     public void setMoodId(Long moodId) {
         this.moodId = moodId;
     }
-
-    @Generated(hash = 1683375380)
-    private transient Long mood__resolvedKey;
 
     /** To-one relationship, resolved on first access. */
     @Generated(hash = 28364958)

@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import freewill.rakesh.com.howdoyoufeel.listener.CurrentLocationListener;
-import freewill.rakesh.com.howdoyoufeel.utility.CalculatorUtils;
+import freewill.rakesh.com.howdoyoufeel.utility.PlanetoryPositionCalculator;
 
 public class CalculatorUtilsTest {
     private CurrentLocationListener currentLocationListener ;
@@ -15,14 +15,14 @@ public class CalculatorUtilsTest {
     @Test
         public void calculateAscendant()
     {
-        int calculateAscendant = CalculatorUtils.calculateAscendant(new Date(), currentLocationListener);
+        int calculateAscendant = PlanetoryPositionCalculator.calculateAscendant(new Date(), currentLocationListener);
         System.out.println(calculateAscendant);
         Assert.assertEquals(calculateAscendant,9);
     }
     @Test
     public void testGetMoonPos()
     {
-        int moonPos = CalculatorUtils.getMoonPos(Calendar.getInstance().getTime());
+        int moonPos = PlanetoryPositionCalculator.getMoonPos(Calendar.getInstance().getTime());
         System.out.println(moonPos);
     }
 }

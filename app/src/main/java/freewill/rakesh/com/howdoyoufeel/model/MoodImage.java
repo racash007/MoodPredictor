@@ -7,12 +7,11 @@ import java.util.Map;
 import freewill.rakesh.com.howdoyoufeel.R;
 
 public enum MoodImage {
+    HAPPY("Happy",R.drawable.happy),
+    TENSED("Tensed",R.drawable.tensed),
     ANGRY("Angry", R.drawable.angry),
-    ANXIOUS("Anxious",R.drawable.anxious),
-    BORED("Bored",R.drawable.bored),
-    BUSY("busy",R.drawable.busy),
-    FRUSTRATED("Frustrated",R.drawable.frustrated),
-    HAPPY("Happy",R.drawable.happy);
+    SCARED("Scared",R.drawable.scared),
+    NAUGHTY("Naughty",R.drawable.naughty);
 
     public static final Map<String, Integer> moodMap = Collections.unmodifiableMap(initializeMapping());
     private final String moodName;

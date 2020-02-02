@@ -81,7 +81,6 @@ public class Utility {
 
     public static RisingSign getZodiacSignFromEclipticLongitude(double longitude)
     {
-        System.out.println(longitude);
         if (longitude <  33.18) {
             return RisingSign.Pisces;
         } else if (longitude <  51.16) {

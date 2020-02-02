@@ -7,7 +7,6 @@ import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
-import org.greenrobot.greendao.annotation.Transient;
 
 @Entity(generateGettersSetters = true)
 public class MoodDriver {
@@ -20,14 +19,14 @@ public class MoodDriver {
     int sunPosition;
     @Property(nameInDb = "mon_pos")@NotNull
     int moonPosition;
-    @Property(nameInDb = "rah_pos")@NotNull
-    int rahuPosition;
-    @Property(nameInDb = "ket_pos")@NotNull
-    int ketuPosition;
     @Property(nameInDb = "mar_pos")@NotNull
     int marPosition;
     @Property(nameInDb = "sat_pos")@NotNull
     int saturnPosition;
+    @Property(nameInDb = "rahu_pos")@NotNull
+    int rahuPosition;
+    @Property(nameInDb = "ketu_pos")@NotNull
+    int ketuPosition;
     @Property(nameInDb = "jup_pos")@NotNull
     int jupiterPosition;
     @Property(nameInDb = "mer_pos")@NotNull
@@ -48,19 +47,29 @@ public class MoodDriver {
     private transient MoodDriverDao myDao;
     @Generated(hash = 1683375380)
     private transient Long mood__resolvedKey;
-    @Generated(hash = 886848837)
+
+
+
+
+
+    public MoodDriver(Mood mood) {
+        this.mood = mood;
+        this.moodId = mood.getMoodId();
+    }
+
+    @Generated(hash = 1836038438)
     public MoodDriver(Long moodDriverId, int ascendantSign, int sunPosition,
-            int moonPosition, int rahuPosition, int ketuPosition, int marPosition,
-            int saturnPosition, int jupiterPosition, int mercuryPosition,
+            int moonPosition, int marPosition, int saturnPosition, int rahuPosition,
+            int ketuPosition, int jupiterPosition, int mercuryPosition,
             int venusPosition, Long moodId) {
         this.moodDriverId = moodDriverId;
         this.ascendantSign = ascendantSign;
         this.sunPosition = sunPosition;
         this.moonPosition = moonPosition;
-        this.rahuPosition = rahuPosition;
-        this.ketuPosition = ketuPosition;
         this.marPosition = marPosition;
         this.saturnPosition = saturnPosition;
+        this.rahuPosition = rahuPosition;
+        this.ketuPosition = ketuPosition;
         this.jupiterPosition = jupiterPosition;
         this.mercuryPosition = mercuryPosition;
         this.venusPosition = venusPosition;
@@ -71,9 +80,22 @@ public class MoodDriver {
     public MoodDriver() {
     }
 
-    public MoodDriver(Mood mood) {
-        this.mood = mood;
-        this.moodId = mood.getMoodId();
+    @Override
+    public String toString() {
+        return "{" +
+                "moodDriverId:'" + moodDriverId +
+                "', ascendantSign:'" + ascendantSign +
+                "', sunPosition:'" + sunPosition +
+                "', moonPosition:'" + moonPosition +
+                "', marPosition:'" + marPosition +
+                "', saturnPosition:'" + saturnPosition +
+                "', rahuPosition:'" + rahuPosition +
+                "', ketuPosition:'" + ketuPosition +
+                "', jupiterPosition:'" + jupiterPosition +
+                "', mercuryPosition:'" + mercuryPosition +
+                "', venusPosition:'" + venusPosition +
+                "', moodId:'" + moodId +
+                "'}";
     }
 
     public Long getMoodDriverId() {
@@ -106,22 +128,6 @@ public class MoodDriver {
 
     public void setMoonPosition(int moonPosition) {
         this.moonPosition = moonPosition;
-    }
-
-    public int getRahuPosition() {
-        return this.rahuPosition;
-    }
-
-    public void setRahuPosition(int rahuPosition) {
-        this.rahuPosition = rahuPosition;
-    }
-
-    public int getKetuPosition() {
-        return this.ketuPosition;
-    }
-
-    public void setKetuPosition(int ketuPosition) {
-        this.ketuPosition = ketuPosition;
     }
 
     public int getMarPosition() {
@@ -170,6 +176,22 @@ public class MoodDriver {
 
     public void setMoodId(Long moodId) {
         this.moodId = moodId;
+    }
+
+    public int getRahuPosition() {
+        return this.rahuPosition;
+    }
+
+    public void setRahuPosition(int rahuPosition) {
+        this.rahuPosition = rahuPosition;
+    }
+
+    public int getKetuPosition() {
+        return this.ketuPosition;
+    }
+
+    public void setKetuPosition(int ketuPosition) {
+        this.ketuPosition = ketuPosition;
     }
 
     /** To-one relationship, resolved on first access. */
@@ -243,4 +265,6 @@ public class MoodDriver {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getMoodDriverDao() : null;
     }
+
+
 }

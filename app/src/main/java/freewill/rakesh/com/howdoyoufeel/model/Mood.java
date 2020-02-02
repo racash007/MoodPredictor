@@ -14,11 +14,7 @@ public class Mood  {
 
     @Override
     public String toString() {
-        return "Mood{" +
-                "mood='" + mood + '\'' +
-                ", moodTime=" + moodTime +
-                ", moodDesc='" + moodDesc + '\'' +
-                '}';
+        return "{ id:'"+ moodId + "', mood:'" + mood + "', moodTime:'" + moodTime +"', moodDesc='" + moodDesc +"'}";
     }
 
 

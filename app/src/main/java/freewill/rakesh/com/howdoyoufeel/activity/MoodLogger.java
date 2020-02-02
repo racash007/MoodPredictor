@@ -28,7 +28,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import java.util.Calendar;
-import java.util.List;
 
 import freewill.rakesh.com.howdoyoufeel.R;
 import freewill.rakesh.com.howdoyoufeel.adapter.MoodViewAdapter;
@@ -55,6 +54,9 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
     PositionCalculatorTask positionCalculatorTask;
     CurrentLocationListener currentLocationListener;
     LocationManager locationManager;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,9 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
 
 
     }
+
+
+
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 1: {
@@ -115,9 +120,9 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
     private void saveMood(View view)
     {Mood mood = new Mood(selectedMood,moodDesc);
         moodDao.insert(mood);
-        positionCalculatorTask = new PositionCalculatorTask(moodDriverDao,currentLocationListener,this);
+        positionCalculatorTask = new PositionCalculatorTask(moodDriverDao,currentLocationListener,this,view);
         positionCalculatorTask.execute(mood);
-        Snackbar.make(view, "Mood saved Successfully" , Snackbar.LENGTH_LONG).show();}
+       }
 
     private void showDescriptionAlert(final View view) {
         moodDesc = null;

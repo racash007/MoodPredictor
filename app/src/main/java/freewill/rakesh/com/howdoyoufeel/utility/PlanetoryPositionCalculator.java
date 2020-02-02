@@ -35,7 +35,7 @@ public class PlanetoryPositionCalculator {
     private static String url;
     private static Context context;
     private static RequestQueue queue;
-
+    private static final  String LOG_TAG = "PositionCalculator";
 
     public static int calculateAscendant(Date moodTime, CurrentLocationListener currentLocationListener) {
         calendar.setTime(moodTime);
@@ -58,9 +58,15 @@ public class PlanetoryPositionCalculator {
         try {
 
             do {
-                Thread.sleep(5000);
+
+                if(attempt>0)
+                {
+                    Thread.sleep(2000);
+                }
                 lastKnowLocation = currentLocationListener.getLastKnowLocation();
+                Log.i(LOG_TAG,"Failed getting location on "+attempt);
                 attempt++;
+
             }
             while (attempt < 3 && lastKnowLocation == null);
 
@@ -78,10 +84,10 @@ public class PlanetoryPositionCalculator {
 
             JSONObject response = future.get();
             String sunRiseStr = (String) ((JSONObject) response.get("results")).get("sunrise");
-            Log.i("MDCAL", sunRiseStr);
+            Log.i(LOG_TAG, sunRiseStr);
             sunRiseTime = Utility.getUTCdate(sunRiseStr);
         } catch (Exception e) {
-            Log.e("MDCAL", "Error", e);
+            Log.e(LOG_TAG, "Error", e);
         }
 
         return sunRiseTime;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_log"
+            android:title="@string/nav_log"
+            android:icon="@drawable/ic_log"
+
+    />
+    <item android:id="@+id/nav_read"
+        android:title="@string/nav_read"
+        android:icon="@drawable/ic_read"
+
+        />
+    <item android:id="@+id/nav_predict"
+        android:title="@string/nav_predict"
+        android:icon="@drawable/ic_predict"
+
+        />
+    <item android:id="@+id/nav_analyze"
+        android:title="@string/nav_analyze"
+        android:icon="@drawable/ic_analyze"
+
+        />
+</menu>

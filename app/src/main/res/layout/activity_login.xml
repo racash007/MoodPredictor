@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.LoginActivity"
+    android:background="@color/cardview_light_background"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_with"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/Login_Logo_top"
+        android:layout_marginBottom="@dimen/Login_Logo_bottom"
+        android:textColor="@color/colorPrimary"></TextView>
+    <com.google.android.gms.common.SignInButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       ></com.google.android.gms.common.SignInButton>
+
+
+    <TextView android:layout_height="wrap_content" android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/Login_Logo"
+         android:textColor="@color/colorPrimary"
+        android:textAlignment="center"
+        android:textStyle="italic"
+        android:text="@string/signIn_text">
+    </TextView>
+
+
+    <EditText
+        android:id="@+id/username"
+        android:hint="@string/username"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/Login_Logo">
+    </EditText>
+    <EditText
+        android:id="@+id/password"
+        android:inputType="textPassword"
+        android:hint="@string/prompt_password"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/item_padding">
+    </EditText>
+
+    <Button
+        android:textColor="@color/colorItem1"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_sign_in"
+        />
+
+    <Button
+        android:background="@color/colorItem1"
+        style="@style/Widget.AppCompat.Toolbar.Button.Navigation"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/skip_login"
+        android:onClick="goToMainScreen"
+        />
+
+
+
+</LinearLayout>

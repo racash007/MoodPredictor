@@ -9,4 +9,23 @@
     <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
     <string name="sun_rise_api_url">https://api.sunrise-sunset.org/json</string>
     <string name="app_url">http://floating-wave-65470.herokuapp.com/</string>
+    <string name="nav_log">Log</string>
+    <string name="nav_read">Read</string>
+    <string name="nav_predict">Prediction</string>
+    <string name="nav_analyze">Analyze</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="signIn_text">Please Sign in to share you mood with friends or for better prediction analysis</string>
+    <string name="login_with">Sign In Or Register</string>
+    <string name="username">Username</string>
+    <string name="skip_login">Skip</string>
+    <string name="facebook_app_id">2839620369431999</string>
+    <string name="fb_login_protocol_scheme">fb2839620369431999</string>
 </resources>

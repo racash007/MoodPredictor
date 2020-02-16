@@ -4,4 +4,10 @@
     <dimen name="item_padding">5dp</dimen>
     <dimen name="img_size">48dp</dimen>
     <dimen name="comment_height">144dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="Login_Logo">30dp</dimen>
+    <dimen name="Login_Logo_top">100dp</dimen>
+    <dimen name="Login_Logo_bottom">40dp</dimen>
 </resources>

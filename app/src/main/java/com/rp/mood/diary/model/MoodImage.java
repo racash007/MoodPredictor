@@ -7,15 +7,20 @@ import java.util.Map;
 import com.rp.mood.diary.R;
 
 public enum MoodImage {
-    HAPPY("Happy",R.drawable.happy),
-    TENSED("Tensed",R.drawable.tensed),
-    ANGRY("Angry", R.drawable.angry),
-    SCARED("Scared",R.drawable.scared),
-    NAUGHTY("Naughty",R.drawable.naughty);
+    HAPPY("Happy",R.drawable.happy,R.string.happy_msg),
+    TENSED("Tensed",R.drawable.tensed,R.string.tensed_msg),
+    ANGRY("Angry", R.drawable.angry,R.string.angry_msg),
+    SCARED("Scared",R.drawable.scared,R.string.scared_msg),
+    NAUGHTY("Naughty",R.drawable.naughty,R.string.naughty_msg);
 
     public static final Map<String, Integer> moodMap = Collections.unmodifiableMap(initializeMapping());
+    public static final Map<String, Integer> moodMsgMap = Collections.unmodifiableMap(initializeMsgMapping());
+
+
+
     private final String moodName;
     private final int moodImage;
+    private final int moodMsg;
 
 
     public String getMoodName() {
@@ -26,16 +31,29 @@ public enum MoodImage {
         return moodImage;
     }
 
-    MoodImage(String moodName, int moodImage)
+    public int getMoodMsg() {
+        return moodMsg;
+    }
+
+    MoodImage(String moodName, int moodImage, int moodMsg)
 {
     this.moodName = moodName;
     this.moodImage = moodImage;
+    this.moodMsg = moodMsg;
 }
 
     private static Map<String, Integer> initializeMapping() {
         Map<String, Integer> mMap = new HashMap<String, Integer>();
         for (MoodImage s : MoodImage.values()) {
             mMap.put(s.getMoodName(), s.getMoodImage());
+        }
+        return mMap;
+    }
+
+    private static  Map<String, Integer>  initializeMsgMapping() {
+        Map<String, Integer> mMap = new HashMap<String, Integer>();
+        for (MoodImage s : MoodImage.values()) {
+            mMap.put(s.getMoodName(), s.getMoodMsg());
         }
         return mMap;
     }

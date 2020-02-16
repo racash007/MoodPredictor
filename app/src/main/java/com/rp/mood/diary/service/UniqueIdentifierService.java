@@ -15,7 +15,7 @@ public class UniqueIdentifierService {
         this.context = context;
     }
 
-    private static String uniqueID = null;
+    private static String uniqueID = "racash007@gmail.com";
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
     public synchronized String getUniqueID() {
         if (uniqueID == null) {

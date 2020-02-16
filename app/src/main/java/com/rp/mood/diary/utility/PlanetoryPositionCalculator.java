@@ -14,9 +14,13 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.util.Date;
 
+
 import com.rp.mood.diary.R;
 import com.rp.mood.diary.listener.CurrentLocationListener;
+import com.rp.mood.diary.service.RestCallService;
 
+
+import rx.Observable;
 
 import static com.rp.mood.diary.utility.PerturbationHelper.applyJupiterPerturbation;
 import static com.rp.mood.diary.utility.PerturbationHelper.applyMoonsPerturbation;
@@ -33,15 +37,16 @@ import static java.lang.Math.toRadians;
 
 public class PlanetoryPositionCalculator {
     private static Calendar calendar = Calendar.getInstance();
-    private static String url;
-    private static Context context;
-    private static RequestQueue queue;
-    private static final  String LOG_TAG = "PositionCalculator";
+    private static Calendar today;
+    private static Date sunRiseTime = null;
+    private static RestCallService restCallService;
 
-    public static int calculateAscendant(Date moodTime, CurrentLocationListener currentLocationListener) {
+
+    public static int calculateAscendant(Date moodTime, Location location) {
+
         calendar.setTime(moodTime);
         int sunPos = getSunPos(moodTime);
-        Date sunRiseTime = getSunRiseTime(currentLocationListener);
+        Date sunRiseTime = getSunRiseTime(location);
         Calendar sunRiseCalender = Calendar.getInstance();
         sunRiseCalender.setTime(sunRiseTime);
         long durationGap = Utility.getTimeDiff(sunRiseCalender, calendar);
@@ -50,47 +55,20 @@ public class PlanetoryPositionCalculator {
     }
 
 
-    private static Date getSunRiseTime(CurrentLocationListener currentLocationListener) {
-
-        Date sunRiseTime = null;
-        Location lastKnowLocation;
-
-        int attempt = 0;
-        try {
-
-            do {
-
-                if(attempt>0)
-                {
-                    Thread.sleep(2000);
-                }
-                lastKnowLocation = currentLocationListener.getLastKnowLocation();
-                Log.i(LOG_TAG,"Failed getting location on "+attempt);
-                attempt++;
-
-            }
-            while (attempt < 3 && lastKnowLocation == null);
-
-            if (lastKnowLocation == null) {
-
-                Calendar instance = Calendar.getInstance();
-                instance.set(Calendar.HOUR_OF_DAY, 6);
-                instance.set(Calendar.MINUTE, 20);
-                return instance.getTime();
-            }
-            RequestFuture<JSONObject> future = RequestFuture.newFuture();
-            JsonObjectRequest request = new JsonObjectRequest(url + "?lat=" + lastKnowLocation.getLatitude() + "&lng=" + lastKnowLocation.getLongitude(), null, future, future);
-            queue.add(request);
-
-
-            JSONObject response = future.get();
-            String sunRiseStr = (String) ((JSONObject) response.get("results")).get("sunrise");
-            Log.i(LOG_TAG, sunRiseStr);
-            sunRiseTime = Utility.getUTCdate(sunRiseStr);
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Error", e);
+    private static Date getSunRiseTime(Location location)
+    {
+        if(today!=null)
+        {
+            today.add(Calendar.DATE,1);
         }
-
+        else {
+            today = Calendar.getInstance();
+        }
+        if(today.after(Calendar.getInstance()) )
+        {
+            return sunRiseTime;
+        }
+        sunRiseTime = PlanetoryPositionCalculator.restCallService.getSunRiseTime(location);
         return sunRiseTime;
     }
 
@@ -100,12 +78,8 @@ public class PlanetoryPositionCalculator {
 
 
 
-    public static void setContext(Context context) {
-        if (PlanetoryPositionCalculator.context == null) {
-            PlanetoryPositionCalculator.context = context;
-            PlanetoryPositionCalculator.url = PlanetoryPositionCalculator.context.getResources().getString(R.string.sun_rise_api_url);
-            PlanetoryPositionCalculator.queue = Volley.newRequestQueue(PlanetoryPositionCalculator.context);
-        }
+    public static void setRestCallService(RestCallService restCallService) {
+       PlanetoryPositionCalculator.restCallService = restCallService;
     }
 
 

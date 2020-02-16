@@ -35,7 +35,7 @@ import com.rp.mood.diary.model.Mood;
 import com.rp.mood.diary.model.MoodDao;
 import com.rp.mood.diary.model.MoodDriverDao;
 import com.rp.mood.diary.service.NotificationService;
-import com.rp.mood.diary.service.ApplicationService;
+import com.rp.mood.diary.service.RestCallService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,7 +61,7 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
     LocationManager locationManager;
     private Map<Integer, Fragment> selectedFragmentMapper;
     FloatingActionButton fab;
-    ApplicationService applicationService;
+    RestCallService restCallService;
     private CompositeSubscription mCompositeSubscription =  new CompositeSubscription();
 
     @Override
@@ -93,11 +93,12 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
         daoSession = DaoHelper.getDaoSession(this);
         moodDao = daoSession.getMoodDao();
         moodDriverDao = daoSession.getMoodDriverDao();
-        applicationService = new ApplicationService(this);
-        currentLocationListener = new CurrentLocationListener();
+        restCallService = new RestCallService(this);
+        positionCalculatorTask = new PositionCalculatorTask(restCallService);
+        currentLocationListener = new CurrentLocationListener(positionCalculatorTask);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!checkLocationPermission()) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_BACKGROUND_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         } else {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 120, 0, currentLocationListener);
         }
@@ -106,28 +107,13 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
         selectedFragmentMapper.put(R.id.nav_read, new ViewerFragment());
         selectedFragmentMapper.put(R.id.nav_predict, new PredictionFragment());
         selectedFragmentMapper.put(R.id.nav_analyze, new StatsFragment());
-        positionCalculatorTask = new PositionCalculatorTask(currentLocationListener,this);
     }
 
     public PositionCalculatorTask getPositionCalculatorTask()
     {
         return this.positionCalculatorTask;
     }
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        return;
-                    }
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 120, 0, currentLocationListener);
-                }
-                return;
-            }
 
-        }
-    }
 
     private void saveMood(View view,String moodDesc)
     {
@@ -140,7 +126,7 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
                     moodDriverDao.save(moodDriver);
                     JSONObject response = null;
                     try {
-                        response = applicationService.persistMoodInApp(mood,moodDriver);
+                        response = restCallService.persistMoodInApp(mood,moodDriver);
                         if ("Success".equalsIgnoreCase(response.get("response").toString())) {
                             Snackbar.make(view, "Mood saved Successfully", Snackbar.LENGTH_LONG).show();
                         }
@@ -179,9 +165,13 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
 
     public boolean checkLocationPermission()
     {
-        String permission = "android.permission.ACCESS_FINE_LOCATION";
-        int res = this.checkCallingOrSelfPermission(permission);
-        return (res == PackageManager.PERMISSION_GRANTED);
+        String finePermission = "android.permission.ACCESS_FINE_LOCATION";
+        String coarsePermission = "android.permission.ACCESS_COARSE_LOCATION";
+        String backGroundPermission = "android.permission.ACCESS_BACKGROUND_LOCATION";
+        int resFinePermission = this.checkCallingOrSelfPermission(finePermission);
+        int resCoarsePermission = this.checkCallingOrSelfPermission(coarsePermission);
+        int resbackGroundPermission = this.checkCallingOrSelfPermission(coarsePermission);
+        return (resFinePermission == PackageManager.PERMISSION_GRANTED || resbackGroundPermission == PackageManager.PERMISSION_GRANTED || resCoarsePermission == PackageManager.PERMISSION_GRANTED);
     }
 
     @Override
@@ -207,7 +197,7 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
         return super.onOptionsItemSelected(item);
     }
 
-    public void deleteAll(View view)
+   /* public void deleteAll(View view)
     {
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
         builder.setTitle("Confirm dialog demo !");
@@ -223,7 +213,8 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
         builder.show();
 
     }
-    @Override
+   */
+   @Override
     public void onItemClicked(String data) {
         this.selectedMood = data;
     }
@@ -246,7 +237,7 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
         mCompositeSubscription.unsubscribe();
     }
 
-    public ApplicationService getApplicationService() {
-        return this.applicationService;
+    public RestCallService getRestCallService() {
+        return this.restCallService;
     }
 }

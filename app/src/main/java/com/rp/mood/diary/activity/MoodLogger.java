@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.rp.mood.diary.R;
 import com.rp.mood.diary.async.PositionCalculatorTask;
@@ -43,6 +42,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -117,23 +117,41 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
 
     private void saveMood(View view,String moodDesc)
     {
-        Mood mood = new Mood(selectedMood,moodDesc);
+        Mood mood = new Mood(selectedMood, moodDesc);
         moodDao.insert(mood);
-        mCompositeSubscription.add(Observable.defer(()-> Observable.just(positionCalculatorTask.getMoodDriver(mood)))
+        mCompositeSubscription.add(Observable.defer(() -> Observable.just(positionCalculatorTask.getMoodDriver(mood)))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.io())
-                .subscribe((moodDriver)->{
+                .subscribe((moodDriver) -> {
                     moodDriverDao.save(moodDriver);
-                    JSONObject response = null;
+
                     try {
-                        response = restCallService.persistMoodInApp(mood,moodDriver);
-                        if ("Success".equalsIgnoreCase(response.get("response").toString())) {
-                            Snackbar.make(view, "Mood saved Successfully", Snackbar.LENGTH_LONG).show();
-                        }
-                    }
-                    catch (JSONException | ExecutionException | InterruptedException e) {
+                        Observable<JSONObject> observable = Observable.just(restCallService.persistMoodInApp(mood, moodDriver));
+
+                        observable.subscribe(
+                                (response) -> {
+                                    try {
+                                        if ("Success".equalsIgnoreCase(response.get("response").toString())) {
+                                            Snackbar.make(view, "Mood saved Successfully", Snackbar.LENGTH_LONG).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                },(error)->{
+                                        error.printStackTrace();
+                                    }
+                        );
+
+
+                        observable.retryWhen(errors ->
+                                errors
+                                        .zipWith(Observable.range(1, 3), (n, i) -> i)
+                                        .flatMap(retryCount -> Observable.timer((long) Math.pow(1, retryCount), TimeUnit.MINUTES))
+                        );
+                    } catch (JSONException | ExecutionException | InterruptedException  e) {
                         e.printStackTrace();
                     }
+
                 }));
        }
     public void processFabClick(View view)
@@ -145,7 +163,7 @@ public class MoodLogger extends AppCompatActivity implements OnItemClickListener
             showDescriptionAlert(view);
         }
     }
-    public void showDescriptionAlert(final View view) {
+    public void showDescriptionAlert(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Comment (Optional)");
         final EditText input = new EditText(this);

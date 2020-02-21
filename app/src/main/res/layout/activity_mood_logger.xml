@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="10"
     tools:context="com.rp.mood.diary.activity.MoodLogger">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appHeader"
@@ -26,8 +27,10 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_below="@id/appHeader" />
+        android:layout_marginBottom="56dp"
+        android:layout_below="@id/appHeader"
+
+        android:layout_marginTop="?attr/actionBarSize" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -43,7 +46,7 @@
 
 <android.support.design.widget.BottomNavigationView
     android:id="@+id/design_bottom_sheet"
-    android:layout_height="wrap_content"
+    android:layout_height="56dp"
     android:layout_width="match_parent"
     android:layout_gravity="bottom"
     app:itemBackground="@drawable/bottom_nav_bg"

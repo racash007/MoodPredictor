@@ -8,7 +8,7 @@
     <string name="today">Today</string>
     <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
     <string name="sun_rise_api_url">https://api.sunrise-sunset.org/json</string>
-    <string name="app_url">http://floating-wave-65470.herokuapp.com/</string>
+    <string name="app_url">http://mood-book.herokuapp.com/</string>
     <string name="nav_log">Log</string>
     <string name="nav_read">Read</string>
     <string name="nav_predict">Prediction</string>

@@ -1,37 +1,42 @@
 package com.rp.mood.diary.async;
 
-import android.content.Context;
 import android.location.Location;
-import android.support.annotation.NonNull;
 
-import com.rp.mood.diary.listener.CurrentLocationListener;
+import androidx.annotation.NonNull;
+
 import com.rp.mood.diary.model.Mood;
 import com.rp.mood.diary.model.MoodDriver;
-import com.rp.mood.diary.service.RestCallService;
-import com.rp.mood.diary.utility.PlanetoryPositionCalculator;
+import com.rp.mood.diary.model.enums.Planet;
+import com.rp.mood.diary.service.PlanetoryPositionCalculatorService;
+
+import java.util.Map;
+
+import javax.inject.Inject;
 
 
 public class PositionCalculatorTask  {
-    private Location location;
-    private final RestCallService restCallService;
 
-    public PositionCalculatorTask(RestCallService restCallService) {
-        this.restCallService = restCallService;
+    private Location location;
+    private PlanetoryPositionCalculatorService positionCalculatorService;
+
+    @Inject
+    public PositionCalculatorTask(PlanetoryPositionCalculatorService positionCalculatorService) {
+        this.positionCalculatorService = positionCalculatorService;
     }
 
     @NonNull
     public MoodDriver getMoodDriver(Mood mood) {
 
         MoodDriver moodDriver = new MoodDriver(mood);
-        PlanetoryPositionCalculator.setRestCallService(restCallService);
-        moodDriver.setAscendantSign(PlanetoryPositionCalculator.calculateAscendant(mood.getMoodTime(),location));
-        moodDriver.setSunPosition(PlanetoryPositionCalculator.getSunPos(mood.getMoodTime()));
-        moodDriver.setMoonPosition(PlanetoryPositionCalculator.getMoonPos(mood.getMoodTime()));
-        moodDriver.setMarPosition(PlanetoryPositionCalculator.getMarPos(mood.getMoodTime()));
-        moodDriver.setJupiterPosition(PlanetoryPositionCalculator.getJupPos(mood.getMoodTime()));
-        moodDriver.setMercuryPosition(PlanetoryPositionCalculator.getMerPos(mood.getMoodTime()));
-        moodDriver.setSaturnPosition(PlanetoryPositionCalculator.getSatPos(mood.getMoodTime()));
-        moodDriver.setVenusPosition(PlanetoryPositionCalculator.getVenPos(mood.getMoodTime()));
+        moodDriver.setAscendantSign(positionCalculatorService.calculateAscendant(mood.getMoodTime(),location));
+        Map<Planet, Integer> planetaryPosition = positionCalculatorService.getPlanetaryPosition(mood.getMoodTime());
+        moodDriver.setSunPosition(planetaryPosition.get(Planet.SUN));
+        moodDriver.setMoonPosition(planetaryPosition.get(Planet.MOON));
+        moodDriver.setMarPosition(planetaryPosition.get(Planet.MARS));
+        moodDriver.setJupiterPosition(planetaryPosition.get(Planet.JUPITER));
+        moodDriver.setMercuryPosition(planetaryPosition.get(Planet.MERCURY));
+        moodDriver.setSaturnPosition(planetaryPosition.get(Planet.SATURN));
+        moodDriver.setVenusPosition(planetaryPosition.get(Planet.VENUS));
         return moodDriver;
     }
 

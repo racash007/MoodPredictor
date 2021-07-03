@@ -1,9 +1,11 @@
 package com.rp.mood.diary.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,7 @@ import android.widget.TextView;
 
 import com.rp.mood.diary.R;
 import com.rp.mood.diary.listener.OnItemClickListener;
-import com.rp.mood.diary.model.MoodImage;
+import com.rp.mood.diary.model.enums.MoodImage;
 
 public class MoodViewAdapter extends RecyclerView.Adapter<MoodViewAdapter.MoodItemViewHolder> {
     Context context;
@@ -35,10 +37,13 @@ public class MoodViewAdapter extends RecyclerView.Adapter<MoodViewAdapter.MoodIt
 
 
     @Override
-    public void onBindViewHolder(final MoodItemViewHolder holder, final int position) {
+    public void onBindViewHolder(final MoodItemViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         // set the data in items
         if(selectedPosition==position)
-        {holder.moodTextView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));}
+        {
+            holder.moodTextView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+            holder.moodTextView.setTextColor(Color.WHITE);
+        }
         else{
           int backGroundColor = position%2!=0?R.color.colorItem1:R.color.colorItem2;
             holder.moodTextView.setBackgroundColor(context.getResources().getColor(backGroundColor));

@@ -1,22 +1,30 @@
-package com.rp.mood.diary.service;
+package com.rp.mood.diary.service.impl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.rp.mood.diary.service.IdentityService;
+
 import java.util.UUID;
 
-public class UniqueIdentifierService {
+import javax.inject.Inject;
+
+import dagger.hilt.android.qualifiers.ApplicationContext;
+
+public class IdentityServiceImpl implements IdentityService {
 
     private final Context context;
 
-    public UniqueIdentifierService(Context context)
+    @Inject
+    public IdentityServiceImpl(@ApplicationContext Context context)
     {
-
         this.context = context;
     }
 
-    private static String uniqueID = "racash007@gmail.com";
+    private static String uniqueID;
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
+
+    @Override
     public synchronized String getUniqueID() {
         if (uniqueID == null) {
             SharedPreferences sharedPrefs = this.context.getSharedPreferences(

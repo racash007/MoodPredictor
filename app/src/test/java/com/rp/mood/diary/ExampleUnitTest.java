@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.Date;
 
-import com.rp.mood.diary.utility.Utility;
+import com.rp.mood.diary.utils.DateUtils;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -14,7 +14,7 @@ import com.rp.mood.diary.utility.Utility;
 public class ExampleUnitTest {
     @Test
     public void testGetUTCDate() throws Exception {
-        Date utcDate = Utility.getUTCdate("7:27:02 AM");
+        Date utcDate = DateUtils.getUTCdate("7:27:02 AM");
         long millis = utcDate.getTime() - new Date().getTime();
         int hours = (int) (millis/(1000 * 60 * 60));
         int mins = (int) ((millis/(1000*60)) % 60);

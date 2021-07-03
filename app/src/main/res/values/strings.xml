@@ -8,7 +8,7 @@
     <string name="today">Today</string>
     <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
     <string name="sun_rise_api_url">https://api.sunrise-sunset.org/json</string>
-    <string name="app_url">http://mood-book.herokuapp.com/</string>
+    <string name="app_url">https://mood-book.herokuapp.com/</string>
     <string name="nav_log">Log</string>
     <string name="nav_read">Read</string>
     <string name="nav_predict">Prediction</string>
@@ -30,9 +30,9 @@
     <string name="fb_login_protocol_scheme">fb2839620369431999</string>
     <string name="NoModelYet">No Model Yet</string>
     <string name="msg_no_model_yet">App would need  more mood logs before it starts predicting</string>
-    <string name="happy_msg">You would have a  blissful two hours ahead. Do Log to confirm/correct the prediction</string>
-    <string name="tensed_msg">You might feel tensed in a while. Try and stay calm.  Hope we helped</string>
+    <string name="happy_msg">You would have a  blissful two hours ahead.</string>
+    <string name="tensed_msg">You might feel worried in a while. Try and stay calm.  Hope we helped</string>
     <string name="angry_msg">You might get frustrated /furiated / irritated by someone or something . Try and maintain your composure . Breathing is the key</string>
-    <string name="scared_msg">You will be anxious /embarassed about something that will or has happended .Do Log the mood to confirm / correct the prediction</string>
-    <string name="naughty_msg">You might feel naughty in a while . Dont worry we won\'t tell anyone</string>
+    <string name="scared_msg">You will be sad about something that will or has happended </string>
+    <string name="naughty_msg">You might feel naughty in a while.</string>
 </resources>

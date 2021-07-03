@@ -6,11 +6,16 @@ import android.os.Bundle;
 
 import com.rp.mood.diary.async.PositionCalculatorTask;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.scopes.ServiceScoped;
+
 public class CurrentLocationListener implements LocationListener {
 
     private final PositionCalculatorTask positionCalculatorTask;
     private Location lastKnowLocation = null;
 
+    @Inject
     public CurrentLocationListener(PositionCalculatorTask positionCalculatorTask) {
 
         this.positionCalculatorTask = positionCalculatorTask;

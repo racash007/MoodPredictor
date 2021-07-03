@@ -1,4 +1,4 @@
-package com.rp.mood.diary.model;
+package com.rp.mood.diary.model.enums;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,10 +7,10 @@ import java.util.Map;
 import com.rp.mood.diary.R;
 
 public enum MoodImage {
-    HAPPY("Happy",R.drawable.happy,R.string.happy_msg),
-    TENSED("Tensed",R.drawable.tensed,R.string.tensed_msg),
+    HAPPY("Joyful",R.drawable.happy,R.string.happy_msg),
+    TENSED("Worried",R.drawable.tensed,R.string.tensed_msg),
     ANGRY("Angry", R.drawable.angry,R.string.angry_msg),
-    SCARED("Scared",R.drawable.scared,R.string.scared_msg),
+    SCARED("Sad",R.drawable.scared,R.string.scared_msg),
     NAUGHTY("Naughty",R.drawable.naughty,R.string.naughty_msg);
 
     public static final Map<String, Integer> moodMap = Collections.unmodifiableMap(initializeMapping());

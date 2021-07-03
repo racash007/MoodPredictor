@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.rp.mood.diary.activity.MoodLogger">
+    tools:context="com.rp.mood.diary.activity.MoodActivity">
     <item
         android:id="@+id/action_savedValue"
         android:orderInCategory="100"

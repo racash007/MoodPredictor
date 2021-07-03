@@ -1,7 +1,7 @@
 package com.rp.mood.diary.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +12,25 @@ import org.greenrobot.greendao.query.LazyList;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.rp.mood.diary.R;
+import com.rp.mood.diary.databinding.MoodListViewItemBinding;
 import com.rp.mood.diary.model.Mood;
 import com.rp.mood.diary.model.MoodDao;
-import com.rp.mood.diary.model.MoodImage;
-import com.rp.mood.diary.utility.Utility;
+import com.rp.mood.diary.model.enums.MoodImage;
+import com.rp.mood.diary.utils.DateUtils;
 
 public class MoodTableViewAdapter extends RecyclerView.Adapter<MoodTableViewAdapter.MoodItemViewHolder> {
     Context context;
     MoodDao moodDao;
-
-    public void setMoodLazyList(LazyList<Mood> moodLazyList) {
+    MoodListViewItemBinding binding;
+    public void setMoodLazyList(List<Mood> moodLazyList) {
         this.moodLazyList = moodLazyList;
+        this.notifyDataSetChanged();
     }
 
-    LazyList<Mood> moodLazyList;
+    List<Mood> moodLazyList;
     SimpleDateFormat simpleDateFormat;
     public MoodTableViewAdapter(Context context, MoodDao moodDao) {
         simpleDateFormat = new SimpleDateFormat();
@@ -39,9 +42,8 @@ public class MoodTableViewAdapter extends RecyclerView.Adapter<MoodTableViewAdap
 
     @Override
     public MoodItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.mood_list_view_item, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        MoodTableViewAdapter.MoodItemViewHolder vh = new MoodTableViewAdapter.MoodItemViewHolder(v); // pass the view to View Holder
+        binding = MoodListViewItemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        MoodTableViewAdapter.MoodItemViewHolder vh = new MoodTableViewAdapter.MoodItemViewHolder(binding); // pass the view to View Holder
         return vh;
     }
 
@@ -66,8 +68,8 @@ public class MoodTableViewAdapter extends RecyclerView.Adapter<MoodTableViewAdap
             }
 
     private void addFormatedDateTime(Date moodTime, MoodItemViewHolder holder) {
-            holder.moodDateView.setText(Utility.getFriendlyDayString(context,moodTime));
-            holder.moodTimeView.setText(Utility.getFormattedTime(moodTime));
+            holder.moodDateView.setText(DateUtils.getFriendlyDayString(context,moodTime));
+            holder.moodTimeView.setText(DateUtils.getFormattedTime(moodTime));
     }
 
     @Override
@@ -82,16 +84,16 @@ public class MoodTableViewAdapter extends RecyclerView.Adapter<MoodTableViewAdap
         TextView moodTimeView;
         TextView moodCommentTextView;
 
-        public MoodItemViewHolder(View itemView) {
-            super(itemView);
-            moodTextView = itemView.findViewById(R.id.mood_view_item_text);
-            moodDateView = itemView.findViewById(R.id.mood_view_item_date);
-            moodTimeView = itemView.findViewById(R.id.mood_view_item_time);
+        public MoodItemViewHolder(MoodListViewItemBinding binding) {
+            super(binding.getRoot());
+            moodTextView = binding.moodViewItemText;
+            moodDateView = binding.moodViewItemDate;
+            moodTimeView = binding.moodViewItemTime;
 
         }
 
         public void bind(Mood mood) {
-            moodCommentTextView  = itemView.findViewById(R.id.mood_comment);
+            moodCommentTextView  = binding.moodComment;
             moodCommentTextView.setVisibility(mood.isExpanded()?View.VISIBLE:View.GONE);
         }
     }

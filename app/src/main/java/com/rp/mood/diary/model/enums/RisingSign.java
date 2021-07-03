@@ -1,4 +1,4 @@
-package com.rp.mood.diary.model;
+package com.rp.mood.diary.model.enums;
 
 public enum RisingSign {
     NoSign(-100,-1,-1,-1,-1),

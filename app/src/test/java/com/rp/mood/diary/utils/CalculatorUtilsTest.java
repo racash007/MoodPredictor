@@ -1,4 +1,4 @@
-package com.rp.mood.diary.utility;
+package com.rp.mood.diary.utils;
 
 import org.junit.Test;
 
@@ -279,19 +279,19 @@ public class CalculatorUtilsTest {
             mood.setMoodTime(now);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(now);
-            int sun =  PlanetoryPositionCalculator.getSunPos(mood.getMoodTime());
+            int sun =  PlanetoryPositionCalculatorService.getSunPos(mood.getMoodTime());
             Calendar sunRiseCalender = Calendar.getInstance();
             sunRiseCalender.setTime(now);
             sunRiseCalender.set(Calendar.HOUR_OF_DAY, 6);
             sunRiseCalender.set(Calendar.MINUTE, 20);
-            long durationGap = Utility.getTimeDiff(sunRiseCalender, calendar);
+            long durationGap = DateUtils.getTimeDiff(sunRiseCalender, calendar);
             int asc = (int)(sun + durationGap) % 12;
-            int moon = PlanetoryPositionCalculator.getMoonPos(mood.getMoodTime());
-            int mar = PlanetoryPositionCalculator.getMarPos(mood.getMoodTime());
-            int jup = PlanetoryPositionCalculator.getJupPos(mood.getMoodTime());
-            int mer = PlanetoryPositionCalculator.getMerPos(mood.getMoodTime());
-            int sat = PlanetoryPositionCalculator.getSatPos(mood.getMoodTime());
-            int ven = PlanetoryPositionCalculator.getVenPos(mood.getMoodTime());
+            int moon = PlanetoryPositionCalculatorService.getMoonPos(mood.getMoodTime());
+            int mar = PlanetoryPositionCalculatorService.getMarPos(mood.getMoodTime());
+            int jup = PlanetoryPositionCalculatorService.getJupPos(mood.getMoodTime());
+            int mer = PlanetoryPositionCalculatorService.getMerPos(mood.getMoodTime());
+            int sat = PlanetoryPositionCalculatorService.getSatPos(mood.getMoodTime());
+            int ven = PlanetoryPositionCalculatorService.getVenPos(mood.getMoodTime());
             System.out.println(asc+","+jup+","+mar+","+mer+","+moon+","+sat+","+sun+","+ven);
         }
 
@@ -303,6 +303,6 @@ public class CalculatorUtilsTest {
         sdf.applyPattern("dd-MM-yyyy HH:mm");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(sdf.parse("08-08-2019 09:58"));
-       System.out.println(Utility.getUT(calendar));
+       System.out.println(DateUtils.getUT(calendar));
     }
 }

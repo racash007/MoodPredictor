@@ -1,6 +1,6 @@
-package com.rp.mood.diary.utility;
+package com.rp.mood.diary.utils;
 
-import static com.rp.mood.diary.utility.Utility.normalize;
+import static com.rp.mood.diary.utils.DateUtils.normalize;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;

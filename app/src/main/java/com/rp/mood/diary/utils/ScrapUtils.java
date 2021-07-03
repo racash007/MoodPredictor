@@ -1,4 +1,4 @@
-package com.rp.mood.diary.utility;
+package com.rp.mood.diary.utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.rp.mood.diary.model.MoodDriver;
-import com.rp.mood.diary.model.RisingSign;
+import com.rp.mood.diary.model.enums.RisingSign;
 
 public class ScrapUtils {
     public static MoodDriver populateDriver(MoodDriver moodDriver)  {

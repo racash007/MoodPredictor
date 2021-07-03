@@ -1,4 +1,4 @@
-package com.rp.mood.diary.utility;
+package com.rp.mood.diary.utils;
 
 import android.content.Context;
 
@@ -10,10 +10,10 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import com.rp.mood.diary.R;
-import com.rp.mood.diary.model.RisingSign;
+import com.rp.mood.diary.model.enums.RisingSign;
 
 
-public class Utility {
+public class DateUtils {
 
     private static GregorianCalendar calendar = new GregorianCalendar();
     private static SimpleDateFormat sdf = new SimpleDateFormat();

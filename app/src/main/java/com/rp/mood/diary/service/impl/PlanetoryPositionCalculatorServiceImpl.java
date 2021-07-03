@@ -1,33 +1,27 @@
-package com.rp.mood.diary.utility;
+package com.rp.mood.diary.service.impl;
 
-import android.content.Context;
 import android.location.Location;
-import android.util.Log;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
+import com.rp.mood.diary.model.enums.Planet;
+import com.rp.mood.diary.service.AstronomyService;
+import com.rp.mood.diary.service.PlanetoryPositionCalculatorService;
+import com.rp.mood.diary.utils.DateUtils;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.inject.Inject;
 
-import com.rp.mood.diary.R;
-import com.rp.mood.diary.listener.CurrentLocationListener;
-import com.rp.mood.diary.service.RestCallService;
+import dagger.hilt.android.scopes.ServiceScoped;
 
-
-import rx.Observable;
-
-import static com.rp.mood.diary.utility.PerturbationHelper.applyJupiterPerturbation;
-import static com.rp.mood.diary.utility.PerturbationHelper.applyMoonsPerturbation;
-import static com.rp.mood.diary.utility.PerturbationHelper.applySaturnPerturbation;
-import static com.rp.mood.diary.utility.Utility.getJulianDate;
-import static com.rp.mood.diary.utility.Utility.getZodiacSignFromEclipticLongitude;
-import static com.rp.mood.diary.utility.Utility.normalize;
+import static com.rp.mood.diary.utils.PerturbationHelper.applyJupiterPerturbation;
+import static com.rp.mood.diary.utils.PerturbationHelper.applyMoonsPerturbation;
+import static com.rp.mood.diary.utils.PerturbationHelper.applySaturnPerturbation;
+import static com.rp.mood.diary.utils.DateUtils.getJulianDate;
+import static com.rp.mood.diary.utils.DateUtils.getZodiacSignFromEclipticLongitude;
+import static com.rp.mood.diary.utils.DateUtils.normalize;
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -35,27 +29,34 @@ import static java.lang.Math.sqrt;
 import static java.lang.Math.toDegrees;
 import static java.lang.Math.toRadians;
 
-public class PlanetoryPositionCalculator {
-    private static Calendar calendar = Calendar.getInstance();
-    private static Calendar today;
-    private static Date sunRiseTime = null;
-    private static RestCallService restCallService;
+public class PlanetoryPositionCalculatorServiceImpl implements PlanetoryPositionCalculatorService {
 
+    private  Calendar calendar;
+    Calendar today;
+    Date sunRiseTime = null;
+    AstronomyService astronomyService;
 
-    public static int calculateAscendant(Date moodTime, Location location) {
+    @Inject
+    public PlanetoryPositionCalculatorServiceImpl(AstronomyService astronomyService) {
+        this.astronomyService = astronomyService;
+        calendar = Calendar.getInstance();
+    }
+
+    @Override
+    public  int calculateAscendant(Date moodTime, Location location) {
 
         calendar.setTime(moodTime);
         int sunPos = getSunPos(moodTime);
         Date sunRiseTime = getSunRiseTime(location);
         Calendar sunRiseCalender = Calendar.getInstance();
         sunRiseCalender.setTime(sunRiseTime);
-        long durationGap = Utility.getTimeDiff(sunRiseCalender, calendar);
+        long durationGap = DateUtils.getTimeDiff(sunRiseCalender, calendar);
         long ascSignNumber = (sunPos + durationGap) % 12;
         return (int) ascSignNumber;
     }
 
-
-    private static Date getSunRiseTime(Location location)
+    @Override
+    public Date getSunRiseTime(Location location)
     {
         if(today!=null)
         {
@@ -68,24 +69,23 @@ public class PlanetoryPositionCalculator {
         {
             return sunRiseTime;
         }
-        sunRiseTime = PlanetoryPositionCalculator.restCallService.getSunRiseTime(location);
+        sunRiseTime = astronomyService.getSunRiseTime(location);
         return sunRiseTime;
     }
 
-
-
-
-
-
-
-    public static void setRestCallService(RestCallService restCallService) {
-       PlanetoryPositionCalculator.restCallService = restCallService;
+    @Override
+    public Map<Planet,Integer> getPlanetaryPosition(Date moodTime)
+    {
+        Map<Planet,Integer> planetPosMap= new HashMap<>();
+        planetPosMap.put(Planet.SUN,getSunPos(moodTime));
+        planetPosMap.put(Planet.MOON,getMoonPos(moodTime));
+        planetPosMap.put(Planet.MARS,getMarPos(moodTime));
+        planetPosMap.put(Planet.JUPITER,getJupPos(moodTime));
+        planetPosMap.put(Planet.MERCURY,getMerPos(moodTime));
+        planetPosMap.put(Planet.SATURN,getSatPos(moodTime));
+        planetPosMap.put(Planet.VENUS,getVenPos(moodTime));
+        return planetPosMap;
     }
-
-
-
-
-
 
     private static double getEclipticLongitude(double n, double i, double w, double a, double eccentricity, double meanAnomaly) {
         double eccentricAnomaly =  getEccentricAnomaly(eccentricity,meanAnomaly); //Eccentricity Anomaly

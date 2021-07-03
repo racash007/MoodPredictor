@@ -2,8 +2,8 @@ package com.rp.mood.diary.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.rp.mood.diary.R;
@@ -16,7 +16,7 @@ public class LoginActivity  extends AppCompatActivity {
     }
 
     public void goToMainScreen(View view) {
-        Intent moodScreenIntent = new Intent(this,MoodLogger.class);
+        Intent moodScreenIntent = new Intent(this, MoodActivity.class);
         startActivity(moodScreenIntent);
     }
 }

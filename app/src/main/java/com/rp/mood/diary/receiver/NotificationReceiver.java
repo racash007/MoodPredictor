@@ -4,10 +4,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
-import com.rp.mood.diary.activity.MoodLogger;
+import com.rp.mood.diary.activity.MoodActivity;
 
 import com.rp.mood.diary.R;
 
@@ -15,7 +15,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        Intent requesting_intent = new Intent(context, MoodLogger.class);
+        Intent requesting_intent = new Intent(context, MoodActivity.class);
         requesting_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,100,requesting_intent,PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,context.getResources().getString(R.string.channel_Id))

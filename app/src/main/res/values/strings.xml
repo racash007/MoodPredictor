@@ -6,7 +6,7 @@
     <string name="channel_Id">MoodLoggerChannelId</string>
     <string name="log">Log</string>
     <string name="today">Today</string>
-    <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
+    <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>></string>
     <string name="sun_rise_api_url">https://api.sunrise-sunset.org/json</string>
     <string name="app_url">https://mood-book.herokuapp.com/</string>
     <string name="nav_log">Log</string>
@@ -23,16 +23,28 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="signIn_text">Please Sign in to share you mood with friends or for better prediction analysis</string>
-    <string name="login_with">Sign In Or Register</string>
+    <string name="login_with">Sign In / Register</string>
     <string name="username">Username</string>
-    <string name="skip_login">Skip</string>
+    <string name="skip_login"><u>Skip</u></string>
     <string name="facebook_app_id">2839620369431999</string>
     <string name="fb_login_protocol_scheme">fb2839620369431999</string>
+    <string name="server_client_id">509072336466-e66lm6m85mrgj407s8nvmji8njhes1i2.apps.googleusercontent.com</string>
     <string name="NoModelYet">No Model Yet</string>
     <string name="msg_no_model_yet">App would need  more mood logs before it starts predicting</string>
     <string name="happy_msg">You would have a  blissful two hours ahead.</string>
+    <string name="exicted_msg">You seem to be exicted about something.</string>
     <string name="tensed_msg">You might feel worried in a while. Try and stay calm.  Hope we helped</string>
     <string name="angry_msg">You might get frustrated /furiated / irritated by someone or something . Try and maintain your composure . Breathing is the key</string>
     <string name="scared_msg">You will be sad about something that will or has happended </string>
     <string name="naughty_msg">You might feel naughty in a while.</string>
+    <string name="none_msg">No idea how you feel.</string>
+    <string name="year_format">EEEE</string>
+    <string name="dd_MMM_YY">dd MMM YY</string>
+    <string name="dd_MMM">dd MMM</string>
+    <string name="Duration">Duration</string>
+    <string name="To">To</string>
+    <string name="From">From</string>
+    <string name="dash">dash</string>
+    <string name="or">OR</string>
+
 </resources>

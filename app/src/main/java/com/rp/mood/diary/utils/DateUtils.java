@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -19,26 +20,21 @@ public class DateUtils {
     private static SimpleDateFormat sdf = new SimpleDateFormat();
 
     public static String getFriendlyDayString(Context context, Date date) {
-
         Calendar current = Calendar.getInstance();
-
         calendar.setTime(date);
 
-
-        // If the date we're building the String for is today's date, the format
-        // is "Today, June 24"
         if (current.get(Calendar.DATE) == calendar.get(Calendar.DATE)) {
             String today = context.getString(R.string.today);
             int formatId = R.string.format_full_friendly_date;
             return String.format(context.getString(formatId),today,getFormattedMonthDay(date));
-        } else if ((calendar.get(Calendar.YEAR) == current.get(Calendar.YEAR))&&( calendar.get(Calendar.DAY_OF_YEAR) < current.get(Calendar.DAY_OF_YEAR) + 7 )) {
-            sdf.applyPattern("EEEE");
-            return sdf.format(date);
-        } else {
-            // Otherwise, use the form "Mon Jun 3"
-            sdf.applyPattern("dd MMM");
-            return sdf.format(date);
+        } else if ((calendar.get(Calendar.YEAR) == current.get(Calendar.YEAR))&&( calendar.get(Calendar.DAY_OF_YEAR) > current.get(Calendar.DAY_OF_YEAR) - 7 )) {
+            sdf.applyPattern(context.getString(R.string.year_format));
+        } else if((calendar.get(Calendar.YEAR) != current.get(Calendar.YEAR))){
+            sdf.applyPattern(context.getString(R.string.dd_MMM_YY));
+        }else {
+            sdf.applyPattern(context.getString(R.string.dd_MMM));
         }
+        return sdf.format(date);
     }
 
 
@@ -50,11 +46,18 @@ public class DateUtils {
     public static String getFormattedTime(Date moodTime) {
         sdf.applyPattern("HH:mm:ss");
         return sdf.format(moodTime);
+    } public static String getFormattedDate(Date moodTime) {
+        sdf.applyPattern("dd-MM-yyyy");
+        return sdf.format(moodTime);
     }
     public static Date getUTCdate(String str) throws ParseException {
         sdf.applyPattern("HH:mm:ss a");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         return  sdf.parse(str);
+    }
+    public static Date convertToDate(String str) throws ParseException {
+        sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
+        return sdf.parse(str);
     }
 
     public static long getTimeDiff(Calendar cal1, Calendar cal2) {

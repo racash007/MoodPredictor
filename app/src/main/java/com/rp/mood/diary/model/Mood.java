@@ -21,7 +21,8 @@ public class Mood  {
     @Id
     private Long moodId;
     // Define a String type field to hold teacher's name
-    @Property(nameInDb = "mood_name")@NotNull
+    @Property(nameInDb = "mood_name")
+    @NotNull
     private String mood;
 
     // Define a String type field to hold student's address

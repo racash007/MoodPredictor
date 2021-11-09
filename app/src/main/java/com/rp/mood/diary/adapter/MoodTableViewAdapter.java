@@ -11,6 +11,7 @@ import android.widget.TextView;
 import org.greenrobot.greendao.query.LazyList;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -25,13 +26,10 @@ public class MoodTableViewAdapter extends RecyclerView.Adapter<MoodTableViewAdap
     Context context;
     MoodDao moodDao;
     MoodListViewItemBinding binding;
-    public void setMoodLazyList(List<Mood> moodLazyList) {
-        this.moodLazyList = moodLazyList;
-        this.notifyDataSetChanged();
-    }
-
     List<Mood> moodLazyList;
     SimpleDateFormat simpleDateFormat;
+
+
     public MoodTableViewAdapter(Context context, MoodDao moodDao) {
         simpleDateFormat = new SimpleDateFormat();
         simpleDateFormat.applyPattern("dd-MM-yyyy HH:mm:ss");
@@ -52,7 +50,7 @@ public class MoodTableViewAdapter extends RecyclerView.Adapter<MoodTableViewAdap
         Mood mood = moodLazyList.get(position);
         int backGroundColor = position%2==0?R.color.colorItem1:R.color.colorItem2;
         holder.itemView.setBackgroundColor(context.getResources().getColor(backGroundColor));
-        holder.moodTextView.setImageResource(MoodImage.moodMap.get(mood.getMood()));
+        holder.moodTextView.setImageResource(MoodImage.moodMap.getOrDefault(mood.getMood(),R.drawable.com_facebook_close));
         addFormatedDateTime(mood.getMoodTime(),holder);
         holder.bind(mood);
         holder.moodCommentTextView.setText(mood.getMoodDesc());
@@ -97,4 +95,16 @@ public class MoodTableViewAdapter extends RecyclerView.Adapter<MoodTableViewAdap
             moodCommentTextView.setVisibility(mood.isExpanded()?View.VISIBLE:View.GONE);
         }
     }
+    public void setMoodLazyList(List<Mood> moodLazyList) {
+        if(moodLazyList.size()>0) {
+            Collections.sort(moodLazyList, (a, b) -> a.getMoodTime().compareTo(b.getMoodTime()));
+            this.moodLazyList = moodLazyList;
+            this.notifyDataSetChanged();
+        }
+    }
+
+    public List<Mood> getMoodLazyList() {
+        return this.moodLazyList;
+    }
+
 }

@@ -1,30 +1,31 @@
 package com.rp.mood.diary.service.impl;
 
 import android.content.Context;
+import android.net.Uri;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.rp.mood.diary.R;
 import com.rp.mood.diary.model.Mood;
 import com.rp.mood.diary.model.MoodDriver;
 import com.rp.mood.diary.service.IdentityService;
 import com.rp.mood.diary.service.MoodAppService;
+import com.rp.mood.diary.utils.DateUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.qualifiers.ApplicationContext;
 
-import static com.rp.mood.diary.utils.DataUtils.getDriverFromMoodDriver;
+import static com.rp.mood.diary.utils.MoodDataUtils.getDriverFromMoodDriver;
 
 public class MoodAppServiceImpl implements MoodAppService {
 
@@ -67,11 +68,17 @@ public class MoodAppServiceImpl implements MoodAppService {
     }
 
     @Override
-    public String fetch() throws ExecutionException, InterruptedException, TimeoutException {
-        RequestFuture<String> future = RequestFuture.newFuture();
-        StringRequest request = new StringRequest(0,app_url + "mood", future, future);
+    public JSONObject getMoodData(Date moodTime) throws ExecutionException, InterruptedException, TimeoutException {
+        RequestFuture<JSONObject> future = RequestFuture.newFuture();
+
+        Uri uri = new  Uri.Builder()
+                        .encodedPath(app_url)
+                        .appendPath("mood")
+                        .appendQueryParameter("u",this.identityService.getUniqueID())
+                        .appendQueryParameter("t",DateUtils.getFormattedDate(moodTime)).build();
+        JsonObjectRequest request = new JsonObjectRequest(uri.toString(), null,future, future);
         queue.add(request);
-        return future.get(5, TimeUnit.SECONDS);
+        return future.get();
     }
 
 

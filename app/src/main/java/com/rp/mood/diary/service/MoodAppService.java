@@ -6,6 +6,7 @@ import com.rp.mood.diary.model.MoodDriver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -14,5 +15,5 @@ public interface MoodAppService {
 
     JSONObject getPrediction(MoodDriver moodDriver) throws JSONException, ExecutionException, InterruptedException;
 
-    String fetch() throws ExecutionException, InterruptedException, JSONException, TimeoutException;
+    JSONObject getMoodData(Date moodTime) throws ExecutionException, InterruptedException, JSONException, TimeoutException;
 }

@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.rp.mood.diary.utils.PlanetoryPositionCalculatorService;
+import com.rp.mood.diary.service.PlanetoryPositionCalculatorService;
 
 public class CalculatorUtilsTest {
     private Location location;

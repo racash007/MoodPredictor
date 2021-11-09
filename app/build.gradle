@@ -64,7 +64,7 @@ dependencies {
     // Dagger Core
     implementation "com.google.dagger:dagger:2.37"
     annotationProcessor "com.google.dagger:dagger-compiler:2.37"
-
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 // Dagger Android
     api 'com.google.dagger:dagger-android:2.37'
     api 'com.google.dagger:dagger-android-support:2.37'

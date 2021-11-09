@@ -7,13 +7,16 @@ import java.util.Map;
 import com.rp.mood.diary.R;
 
 public enum MoodImage {
-    HAPPY("Joyful",R.drawable.happy,R.string.happy_msg),
-    TENSED("Worried",R.drawable.tensed,R.string.tensed_msg),
+    HAPPY("Happy",R.drawable.happy,R.string.happy_msg),
+    EXCITED("Excited",R.drawable.excited,R.string.exicted_msg),
+    NAUGHTY("Naughty",R.drawable.naughty,R.string.naughty_msg),
     ANGRY("Angry", R.drawable.angry,R.string.angry_msg),
-    SCARED("Sad",R.drawable.scared,R.string.scared_msg),
-    NAUGHTY("Naughty",R.drawable.naughty,R.string.naughty_msg);
+    WORRIED("Worried",R.drawable.worried,R.string.tensed_msg),
+    DEPRESSED("Depressed",R.drawable.depressed,R.string.scared_msg);
+
 
     public static final Map<String, Integer> moodMap = Collections.unmodifiableMap(initializeMapping());
+    public static final Map<String, Integer> moodStatsMap = Collections.unmodifiableMap(initializeStatsMapping());
     public static final Map<String, Integer> moodMsgMap = Collections.unmodifiableMap(initializeMsgMapping());
 
 
@@ -54,6 +57,15 @@ public enum MoodImage {
         Map<String, Integer> mMap = new HashMap<String, Integer>();
         for (MoodImage s : MoodImage.values()) {
             mMap.put(s.getMoodName(), s.getMoodMsg());
+        }
+        return mMap;
+    }
+
+    private static Map<String, Integer> initializeStatsMapping() {
+        Map<String, Integer> mMap = new HashMap<String, Integer>();
+        int counter =0;
+        for (MoodImage s : MoodImage.values()) {
+            mMap.put(s.getMoodName(), counter++);
         }
         return mMap;
     }

@@ -39,4 +39,9 @@ public class IdentityServiceImpl implements IdentityService {
         }
         return uniqueID;
     }
+
+    @Override
+    public void setUniqueId(String id) {
+        uniqueID = id;
+    }
 }

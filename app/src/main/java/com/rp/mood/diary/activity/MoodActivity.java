@@ -218,12 +218,13 @@ public class MoodActivity extends AppCompatActivity implements OnItemClickListen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_savedValue) {
-            changeFragment(viewerFragment);
+        switch (item.getItemId()){
+        case R.id.action_savedValue:
+           changeFragment(viewerFragment);
             return true;
+        default:
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
 

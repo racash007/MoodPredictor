@@ -1,6 +1,7 @@
 package com.rp.mood.diary.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,12 @@ import com.rp.mood.diary.adapter.MoodTableViewAdapter;
 import com.rp.mood.diary.databinding.MoodViewerBinding;
 import com.rp.mood.diary.model.MoodDao;
 import com.rp.mood.diary.service.MoodAppService;
-import com.rp.mood.diary.utils.DataUtils;
+import com.rp.mood.diary.utils.MoodDataUtils;
 
 import org.json.JSONException;
 
+import java.util.Date;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -27,9 +30,11 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 @AndroidEntryPoint
-public class ViewerFragment extends Fragment {
+public class ViewerFragment extends Fragment  {
 
     RecyclerView recyclerView;
     MoodTableViewAdapter adapter;
@@ -55,18 +60,35 @@ public class ViewerFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         binding.refreshView.setOnRefreshListener(()->{
-            try {
-                Observable.just(this.moodAppService.fetch()).doOnNext(
-                        (jsonObject)->{
-                            adapter.setMoodLazyList(DataUtils.getMood(jsonObject));
-                        }
-                );
 
-            } catch (ExecutionException | InterruptedException | JSONException | TimeoutException e) {
-                    e.printStackTrace();
-            }
+                Observable.defer(()->
+                {
+                    try {
+                        return Observable.just(this.moodAppService.getMoodData(adapter.getMoodLazyList()
+                                .stream()
+                                .findFirst()
+                                .map(m->m.getMoodTime())
+                                .orElse(new Date())));
+                        } catch (ExecutionException | InterruptedException | JSONException | TimeoutException e) {
+                        Log.e("routes", e.getMessage());
+                        return Observable.error(e);
+            }}
+            ).retry(3).subscribeOn(Schedulers.computation())
+                        .map(jsonObject -> MoodDataUtils.getMood(jsonObject))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe((moodList) ->{
+                            adapter.setMoodLazyList(moodList);
+                            binding.refreshView.setRefreshing(false);
+                            Observable.just(moodList).subscribeOn(Schedulers.io()).subscribe(moodList1 -> {
+                               moodList1.forEach(mood -> {
+                                   moodDao.save(mood);
+                               });
+                            });
+                        });
         });
         ((MoodActivity)getActivity()).hideFab();
         return binding.getRoot();
     }
+
+
 }

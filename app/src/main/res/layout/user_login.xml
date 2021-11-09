@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -19,12 +18,22 @@
         android:textAlignment="center"
         android:layout_marginTop="@dimen/Login_Logo_top"
         android:layout_marginBottom="@dimen/Login_Logo_bottom"
-        android:textColor="@color/colorPrimary"></TextView>
+        android:textColor="@color/colorPrimary"
+        android:gravity="center_horizontal" />
+
     <com.google.android.gms.common.SignInButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       ></com.google.android.gms.common.SignInButton>
+        android:id="@+id/googleSignIn" />
 
+
+    <Button
+        style="@style/Widget.AppCompat.Toolbar.Button.Navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="goToMainScreen"
+        android:text="@string/skip_login"
+        android:textColor="@color/colorPrimary" />
 
     <TextView android:layout_height="wrap_content" android:layout_width="match_parent"
         android:layout_marginTop="@dimen/Login_Logo"
@@ -33,42 +42,6 @@
         android:textStyle="italic"
         android:text="@string/signIn_text">
     </TextView>
-
-
-    <EditText
-        android:id="@+id/username"
-        android:hint="@string/username"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/Login_Logo">
-    </EditText>
-    <EditText
-        android:id="@+id/password"
-        android:inputType="textPassword"
-        android:hint="@string/prompt_password"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/item_padding">
-    </EditText>
-
-    <Button
-        android:textColor="@color/colorItem1"
-        android:background="@color/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/action_sign_in"
-        />
-
-    <Button
-        android:background="@color/colorItem1"
-        style="@style/Widget.AppCompat.Toolbar.Button.Navigation"
-        android:textColor="@color/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/skip_login"
-        android:onClick="goToMainScreen"
-        />
-
 
 
 </LinearLayout>

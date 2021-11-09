@@ -41,8 +41,7 @@ public class MoodTableViewAdapter extends RecyclerView.Adapter<MoodTableViewAdap
     @Override
     public MoodItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         binding = MoodListViewItemBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
-        MoodTableViewAdapter.MoodItemViewHolder vh = new MoodTableViewAdapter.MoodItemViewHolder(binding); // pass the view to View Holder
-        return vh;
+        return new MoodItemViewHolder(binding);
     }
 
     @Override
